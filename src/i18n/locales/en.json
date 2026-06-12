@@ -17,14 +17,14 @@
       "medium": "Medium (Slow, high accuracy)"
     },
     "languages": {
-      "auto": "🔍 Auto-Detect Language",
-      "vi": "🇻🇳 Vietnamese",
-      "en": "🇺🇸 English",
-      "ja": "🇯🇵 Japanese",
-      "zh": "🇨🇳 Chinese",
-      "ko": "🇰🇷 Korean",
-      "fr": "🇫🇷 French",
-      "de": "🇩🇪 German"
+      "auto": "Auto-Detect Language",
+      "vi": "Vietnamese",
+      "en": "English",
+      "ja": "Japanese",
+      "zh": "Chinese",
+      "ko": "Korean",
+      "fr": "French",
+      "de": "German"
     }
   },
   "upload": {
@@ -34,7 +34,12 @@
     "limitInfo": "Supports files up to 500MB+ (running locally)",
     "formatError": "Format not supported! Please select an audio or video file.",
     "audioFormats": "MP3, WAV, M4A, FLAC",
-    "videoFormats": "MP4, MKV, MOV, AVI"
+    "videoFormats": "MP4, MKV, MOV, AVI",
+    "tabFile": "Upload File",
+    "tabUrl": "Paste Link",
+    "urlTitle": "Enter Video/Audio Link",
+    "urlSubtitle": "Supports YouTube, TikTok, Drive, and direct media URLs",
+    "urlLimitInfo": "Ensure the link is public and accessible"
   },
   "player": {
     "changeFile": "Choose another file",
@@ -44,6 +49,7 @@
   "app": {
     "startBtn": "Start Transcription",
     "uploading": "Uploading file to server...",
+    "downloadingUrl": "Downloading audio from URL...",
     "transcribing": "Transcribing audio...",
     "gpuAlert": "This process is running directly on your Nvidia RTX 2060 GPU. Duration depends on file length.",
     "completedAlert": "Completed! You can view the result in the right panel.",
@@ -72,6 +78,7 @@
   },
   "store": {
     "selectFileError": "Please select a file before proceeding!",
+    "enterUrlError": "Please enter a valid URL before proceeding!",
     "unknownError": "An unknown error occurred during processing."
   }
 }

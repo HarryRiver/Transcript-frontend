@@ -3,7 +3,7 @@ import Header from './components/Header';
 import UploadZone from './components/UploadZone';
 import MediaPlayer from './components/MediaPlayer';
 import TranscriptViewer from './components/TranscriptViewer';
-import { Play, RotateCcw, AlertCircle, Sparkles, Loader2 } from 'lucide-react';
+import { Play, RotateCcw, AlertCircle, Sparkles, Loader2, FileText } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useTranslation } from 'react-i18next';
 
@@ -37,6 +37,7 @@ export default function App() {
   const startTranscription = useTranscribeStore((state) => state.startTranscription);
   const reset = useTranscribeStore((state) => state.reset);
   const result = useTranscribeStore((state) => state.result);
+  const transcribeType = useTranscribeStore((state) => state.transcribeType);
 
   const handleLanguageChange = (e) => {
     setSettings({ language: e.target.value });
@@ -47,7 +48,7 @@ export default function App() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-tr from-slate-950 via-slate-900 to-indigo-950 text-slate-100 flex flex-col antialiased pb-12">
+    <div className="min-h-screen bg-linear-to-tr from-slate-950 via-slate-900 to-indigo-950 text-slate-100 flex flex-col antialiased pb-12">
       {/* 1. Header */}
       <Header />
 
@@ -101,7 +102,7 @@ export default function App() {
           {/* Upload and File display panel */}
           <div className="w-full">
             <AnimatePresence mode="wait">
-              {!file ? (
+              {!file && (status === 'idle' || status === 'error') ? (
                 <motion.div
                   key="upload-zone"
                   initial={{ opacity: 0, y: 10 }}
@@ -123,10 +124,10 @@ export default function App() {
                   <MediaPlayer />
 
                   {/* Run / Progress panel */}
-                  <div className="glass-card border border-white/5 rounded-2xl p-4 flex flex-col gap-4">
+                  <div className="glass-panel rounded-2xl border border-white/5 p-4 flex flex-col gap-4">
                     
                     {/* Idle state: Show action button */}
-                    {(status === 'idle' || status === 'error') && (
+                    {(status === 'idle' || status === 'error') && transcribeType === 'file' && (
                       <button
                         onClick={startTranscription}
                         className="btn-primary"
@@ -139,17 +140,33 @@ export default function App() {
                     {status === 'uploading' && (
                       <div className="flex flex-col gap-2">
                         <div className="flex justify-between text-xs font-medium text-slate-300">
-                          <span>{t('app.uploading')}</span>
-                          <span>{uploadProgress}%</span>
+                          <span>{transcribeType === 'file' ? t('app.uploading') : t('app.downloadingUrl')}</span>
+                          {transcribeType === 'file' && <span>{uploadProgress}%</span>}
                         </div>
-                        <div className="w-full bg-white/5 rounded-full h-2 overflow-hidden border border-white/5">
-                          <motion.div
-                            className="bg-gradient-to-r from-brand-primary to-brand-accent h-full rounded-full"
-                            initial={{ width: 0 }}
-                            animate={{ width: `${uploadProgress}%` }}
-                            transition={{ duration: 0.1 }}
-                          />
-                        </div>
+                        {transcribeType === 'file' ? (
+                          <div className="w-full bg-white/5 rounded-full h-2 overflow-hidden border border-white/5">
+                            <motion.div
+                              className="bg-linear-to-r from-brand-primary to-brand-accent h-full rounded-full"
+                              initial={{ width: 0 }}
+                              animate={{ width: `${uploadProgress}%` }}
+                              transition={{ duration: 0.1 }}
+                            />
+                          </div>
+                        ) : (
+                          <div className="w-full bg-white/5 rounded-full h-2 overflow-hidden border border-white/5 relative">
+                            <motion.div
+                              className="bg-linear-to-r from-brand-primary to-brand-accent h-full rounded-full w-1/3 absolute"
+                              animate={{
+                                left: ['-33%', '100%']
+                              }}
+                              transition={{
+                                repeat: Infinity,
+                                duration: 1.5,
+                                ease: "linear"
+                              }}
+                            />
+                          </div>
+                        )}
                       </div>
                     )}
 
@@ -217,10 +234,14 @@ export default function App() {
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
-                className="h-full w-full rounded-2xl border border-white/5 bg-white/[0.01] flex flex-col items-center justify-center p-8 text-center"
+                className="h-full w-full rounded-2xl border border-white/5 bg-white/1 flex flex-col items-center justify-center p-8 text-center"
               >
-                <div className="w-16 h-16 rounded-2xl bg-white/[0.02] border border-white/5 flex items-center justify-center text-slate-500 mb-4">
-                  <Loader2 className={`w-8 h-8 ${status === 'transcribing' || status === 'uploading' ? 'animate-spin text-brand-primary-hover' : 'opacity-40'}`} />
+                <div className="w-16 h-16 rounded-2xl bg-white/2 border border-white/5 flex items-center justify-center text-slate-500 mb-4">
+                  {status === 'transcribing' || status === 'uploading' ? (
+                    <Loader2 className="w-8 h-8 animate-spin text-brand-primary-hover" />
+                  ) : (
+                    <FileText className="w-8 h-8 opacity-40 text-slate-400" />
+                  )}
                 </div>
                 
                 {status === 'transcribing' || status === 'uploading' ? (

@@ -17,14 +17,14 @@
       "medium": "Medium (Chậm, chính xác cao)"
     },
     "languages": {
-      "auto": "🔍 Tự động nhận dạng (Auto)",
-      "vi": "🇻🇳 Tiếng Việt (Vietnamese)",
-      "en": "🇺🇸 Tiếng Anh (English)",
-      "ja": "🇯🇵 Tiếng Nhật (Japanese)",
-      "zh": "🇨🇳 Tiếng Trung (Chinese)",
-      "ko": "🇰🇷 Tiếng Hàn (Korean)",
-      "fr": "🇫🇷 Tiếng Pháp (French)",
-      "de": "🇩🇪 Tiếng Đức (German)"
+      "auto": "Tự động nhận dạng (Auto)",
+      "vi": "Tiếng Việt (Vietnamese)",
+      "en": "Tiếng Anh (English)",
+      "ja": "Tiếng Nhật (Japanese)",
+      "zh": "Tiếng Trung (Chinese)",
+      "ko": "Tiếng Hàn (Korean)",
+      "fr": "Tiếng Pháp (French)",
+      "de": "Tiếng Đức (German)"
     }
   },
   "upload": {
@@ -34,7 +34,12 @@
     "limitInfo": "Hỗ trợ file có dung lượng lên đến 500MB+ (chạy local)",
     "formatError": "Định dạng file không được hỗ trợ! Vui lòng chọn file âm thanh hoặc video.",
     "audioFormats": "MP3, WAV, M4A, FLAC",
-    "videoFormats": "MP4, MKV, MOV, AVI"
+    "videoFormats": "MP4, MKV, MOV, AVI",
+    "tabFile": "Tải file lên",
+    "tabUrl": "Dán link video",
+    "urlTitle": "Nhập đường dẫn Video/Audio",
+    "urlSubtitle": "Hỗ trợ link YouTube, TikTok, Drive và các đường dẫn media trực tiếp",
+    "urlLimitInfo": "Đảm bảo liên kết công khai và có thể truy cập"
   },
   "player": {
     "changeFile": "Chọn file khác",
@@ -44,6 +49,7 @@
   "app": {
     "startBtn": "Bắt đầu trích xuất phụ đề",
     "uploading": "Đang tải file lên server...",
+    "downloadingUrl": "Đang tải luồng âm thanh từ URL...",
     "transcribing": "Đang nhận diện giọng nói...",
     "gpuAlert": "Tiến trình này đang chạy trực tiếp trên GPU Nvidia RTX 2060 của bạn. Thời gian tùy thuộc vào độ dài file.",
     "completedAlert": "Đã dịch xong! Bạn có thể xem kết quả ở khung bên phải.",
@@ -72,6 +78,7 @@
   },
   "store": {
     "selectFileError": "Vui lòng chọn một file trước khi tiếp tục!",
+    "enterUrlError": "Vui lòng nhập đường dẫn URL hợp lệ trước khi tiếp tục!",
     "unknownError": "Đã xảy ra lỗi không xác định trong quá trình xử lý."
   }
 }
