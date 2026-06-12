@@ -23,6 +23,9 @@ export const useTranscribeStore = create((set, get) => ({
   currentTime: 0,
   isPlaying: false,
   playerRef: null,
+  
+  transcribeType: 'file', // 'file' | 'url'
+  videoUrl: '',
 
   setFile: (file) => {
     if (!file) {
@@ -71,6 +74,8 @@ export const useTranscribeStore = create((set, get) => ({
   setIsPlaying: (isPlaying) => set({ isPlaying }),
   setPlayerRef: (ref) => set({ playerRef: ref }),
   getPlayerRef: () => get().playerRef,
+  setTranscribeType: (transcribeType) => set({ transcribeType }),
+  setVideoUrl: (videoUrl) => set({ videoUrl }),
 
   reset: () => {
     const currentUrl = get().fileUrl;
@@ -82,6 +87,8 @@ export const useTranscribeStore = create((set, get) => ({
       fileSize: '',
       fileType: null,
       fileUrl: null,
+      transcribeType: 'file',
+      videoUrl: '',
       status: 'idle',
       error: null,
       uploadProgress: 0,
@@ -92,42 +99,60 @@ export const useTranscribeStore = create((set, get) => ({
   },
 
   startTranscription: async () => {
-    const { file, settings } = get();
-    if (!file) {
+    const { file, videoUrl, transcribeType, settings } = get();
+    
+    if (transcribeType === 'file' && !file) {
       set({ error: 'store.selectFileError' });
+      return;
+    }
+    if (transcribeType === 'url' && (!videoUrl || !videoUrl.trim())) {
+      set({ error: 'store.enterUrlError' });
       return;
     }
 
     set({ status: 'uploading', uploadProgress: 0, error: null, result: null });
 
-    const formData = new FormData();
-    formData.append('file', file);
-    formData.append('model', settings.model);
-    formData.append('language', settings.language);
+    if (transcribeType === 'file') {
+      const formData = new FormData();
+      formData.append('file', file);
+      formData.append('model', settings.model);
+      formData.append('language', settings.language);
 
-    try {
-      // Send request with upload progress monitoring
-      const response = await axios.post(`${API_BASE_URL}/transcribe`, formData, {
-        headers: {
-          'Content-Type': 'multipart/form-data',
-        },
-        onUploadProgress: (progressEvent) => {
-          const percentCompleted = Math.round((progressEvent.loaded * 100) / progressEvent.total);
-          
-          if (percentCompleted === 100) {
-            // Server starts conversion & transcription after receiving the file
-            set({ status: 'transcribing', uploadProgress: 100 });
-          } else {
-            set({ uploadProgress: percentCompleted });
-          }
-        },
-      });
+      try {
+        const response = await axios.post(`${API_BASE_URL}/transcribe`, formData, {
+          headers: {
+            'Content-Type': 'multipart/form-data',
+          },
+          onUploadProgress: (progressEvent) => {
+            const percentCompleted = Math.round((progressEvent.loaded * 100) / progressEvent.total);
+            if (percentCompleted === 100) {
+              set({ status: 'transcribing', uploadProgress: 100 });
+            } else {
+              set({ uploadProgress: percentCompleted });
+            }
+          },
+        });
 
-      set({ result: response.data, status: 'completed' });
-    } catch (err) {
-      console.error(err);
-      const errorMsg = err.response?.data?.detail || 'store.unknownError';
-      set({ error: errorMsg, status: 'error' });
+        set({ result: response.data, status: 'completed' });
+      } catch (err) {
+        console.error(err);
+        const errorMsg = err.response?.data?.detail || 'store.unknownError';
+        set({ error: errorMsg, status: 'error' });
+      }
+    } else {
+      // URL Transcription
+      try {
+        const response = await axios.post(`${API_BASE_URL}/transcribe-url`, {
+          url: videoUrl,
+          model: settings.model,
+          language: settings.language
+        });
+        set({ result: response.data, status: 'completed' });
+      } catch (err) {
+        console.error(err);
+        const errorMsg = err.response?.data?.detail || 'store.unknownError';
+        set({ error: errorMsg, status: 'error' });
+      }
     }
   }
 }));
