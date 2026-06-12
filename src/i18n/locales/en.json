@@ -1,0 +1,77 @@
+{
+  "header": {
+    "subtitle": "Local Speech-to-Text System (Local Whisper)",
+    "checking": "Checking connection...",
+    "gpuActive": "GPU Active",
+    "online": "Server Online",
+    "offline": "Server Offline (Start backend server)"
+  },
+  "settings": {
+    "title": "AI Model Configuration",
+    "modelLabel": "Transcription Model (Model size):",
+    "languageLabel": "File Language:",
+    "models": {
+      "tiny": "Tiny (Very fast, average accuracy)",
+      "base": "Base (Fast, decent accuracy)",
+      "small": "Small (Balanced, recommended)",
+      "medium": "Medium (Slow, high accuracy)"
+    },
+    "languages": {
+      "auto": "🔍 Auto-Detect Language",
+      "vi": "🇻🇳 Vietnamese",
+      "en": "🇺🇸 English",
+      "ja": "🇯🇵 Japanese",
+      "zh": "🇨🇳 Chinese",
+      "ko": "🇰🇷 Korean",
+      "fr": "🇫🇷 French",
+      "de": "🇩🇪 German"
+    }
+  },
+  "upload": {
+    "dragDropText": "Drag & drop audio or video file here",
+    "orChoose": "or click to",
+    "selectFile": "select file from device",
+    "limitInfo": "Supports files up to 500MB+ (running locally)",
+    "formatError": "Format not supported! Please select an audio or video file.",
+    "audioFormats": "MP3, WAV, M4A, FLAC",
+    "videoFormats": "MP4, MKV, MOV, AVI"
+  },
+  "player": {
+    "changeFile": "Choose another file",
+    "pause": "Pause",
+    "play": "Listen"
+  },
+  "app": {
+    "startBtn": "Start Transcription",
+    "uploading": "Uploading file to server...",
+    "transcribing": "Transcribing audio...",
+    "gpuAlert": "This process is running directly on your Nvidia RTX 2060 GPU. Duration depends on file length.",
+    "completedAlert": "Completed! You can view the result in the right panel.",
+    "resetBtn": "Reset",
+    "errorTitle": "Error during processing:",
+    "preparingTitle": "Preparing transcript...",
+    "preparingDesc": "The Whisper model is converting audio into subtitles. The result will appear here automatically.",
+    "noDataTitle": "No subtitle data yet",
+    "noDataDesc": "Upload an audio/video file in the left panel and click start to extract text."
+  },
+  "viewer": {
+    "searchPlaceholder": "Search keywords...",
+    "autoScroll": "Auto Scroll",
+    "copy": "Copy",
+    "copied": "Copied",
+    "download": "Download",
+    "exportTxt": ".TXT Format (Plain Text)",
+    "exportSrt": ".SRT Format (Subtitles)",
+    "exportVtt": ".VTT Format (Web Subtitles)",
+    "exportJson": ".JSON Format (Full Metadata)",
+    "detectedLanguage": "Detected Language",
+    "confidence": "confidence",
+    "duration": "Total duration",
+    "noResult": "No matching results found.",
+    "noData": "No subtitle data available."
+  },
+  "store": {
+    "selectFileError": "Please select a file before proceeding!",
+    "unknownError": "An unknown error occurred during processing."
+  }
+}

@@ -1,0 +1,126 @@
+@import "tailwindcss";
+
+@theme {
+  /* Common color palette tokens */
+  --color-brand-primary: #9333ea; /* Purple 600 */
+  --color-brand-primary-hover: #a855f7; /* Purple 500 */
+  --color-brand-primary-glow: rgba(147, 51, 234, 0.15);
+  
+  --color-brand-accent: #6366f1; /* Indigo 600 */
+  --color-brand-accent-hover: #818cf8; /* Indigo 400 */
+  
+  --color-bg-dark: #020617; /* Slate 950 */
+  --color-text-primary: #f1f5f9; /* Slate 100 */
+  --color-text-secondary: #94a3b8; /* Slate 400 */
+  --color-text-muted: #475569; /* Slate 600 */
+  
+  /* Shared typography token */
+  --font-main: 'Inter', system-ui, -apple-system, sans-serif;
+  
+  --radius-panel: 1rem; /* 16px */
+  --radius-card: 0.75rem; /* 12px */
+}
+
+@layer base {
+  body {
+    background-color: var(--color-bg-dark);
+    color: var(--color-text-primary);
+    font-family: var(--font-main);
+    @apply antialiased selection:bg-brand-primary selection:text-white;
+  }
+}
+
+/* --- Shared Layout Classes --- */
+.glass-panel {
+  background: rgba(15, 23, 42, 0.45);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.glass-card {
+  background: rgba(30, 41, 59, 0.4);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+/* --- Shared Typography & Components --- */
+.text-title {
+  @apply text-base font-semibold text-slate-200 m-0;
+}
+
+.input-select {
+  @apply w-full bg-white/5 border border-white/10 rounded-xl px-3 py-2 text-sm text-text-primary focus:outline-none focus:border-brand-primary disabled:opacity-50 disabled:cursor-not-allowed transition-all;
+}
+
+/* Buttons */
+.btn-primary {
+  @apply py-3 px-4 bg-gradient-to-r from-brand-primary to-brand-accent hover:from-brand-primary-hover hover:to-brand-accent-hover text-white rounded-xl font-medium text-sm flex items-center justify-center gap-2 shadow-lg shadow-brand-primary-glow hover:scale-[1.01] active:scale-[0.99] transition-all cursor-pointer;
+}
+
+.btn-secondary {
+  @apply flex items-center gap-1.5 text-xs text-text-secondary bg-white/5 px-3 py-2 rounded-xl border border-white/5 hover:bg-white/10 active:scale-[0.98] transition-all;
+}
+
+.btn-accent {
+  @apply flex items-center gap-1.5 text-xs text-purple-300 bg-brand-primary/10 hover:bg-brand-primary/20 px-3 py-2 rounded-xl border border-brand-primary/20 active:scale-[0.98] transition-all;
+}
+
+/* Badges */
+.badge-status-loading {
+  @apply flex items-center gap-1.5 text-xs text-slate-400 bg-white/5 px-3 py-1.5 rounded-full;
+}
+
+.badge-status-ok {
+  @apply flex items-center gap-1.5 text-xs text-emerald-400 bg-emerald-500/10 border border-emerald-500/20 px-3 py-1.5 rounded-full;
+}
+
+.badge-status-gpu {
+  @apply flex items-center gap-1.5 text-xs text-purple-300 bg-brand-primary/10 border border-brand-primary/20 px-3 py-1.5 rounded-full;
+}
+
+.badge-status-err {
+  @apply flex items-center gap-1.5 text-xs text-rose-400 bg-rose-500/10 border border-rose-500/20 px-3 py-1.5 rounded-full;
+}
+
+/* --- Upload Zone Component Classes --- */
+.upload-zone {
+  @apply w-full aspect-video md:aspect-[1.8] rounded-2xl border-2 border-dashed cursor-pointer flex flex-col items-center justify-center p-6 text-center transition-all duration-300 relative overflow-hidden border-white/10 bg-white/[0.02] hover:border-white/20 hover:bg-white/[0.04];
+}
+
+.upload-zone-active {
+  @apply border-brand-primary bg-brand-primary/5 shadow-lg shadow-brand-primary-glow;
+}
+
+.upload-zone-overlay {
+  @apply absolute inset-0 bg-gradient-to-tr from-brand-primary/0 via-brand-primary/0 to-brand-accent/5 opacity-0 transition-opacity duration-500 pointer-events-none;
+}
+
+.upload-zone:hover .upload-zone-overlay {
+  opacity: 1;
+}
+
+.upload-zone-icon-wrapper {
+  @apply p-4 rounded-full border transition-all duration-300 bg-white/5 border-white/10;
+}
+
+.upload-zone:hover .upload-zone-icon-wrapper {
+  @apply scale-105 border-white/20 bg-white/10;
+}
+
+.upload-zone-icon-wrapper-active {
+  @apply bg-brand-primary/20 border-brand-primary-hover scale-110!;
+}
+
+.upload-zone .upload-icon {
+  @apply w-8 h-8 transition-colors duration-300 text-text-secondary;
+}
+
+.upload-zone:hover .upload-icon {
+  @apply text-text-primary;
+}
+
+.upload-zone-active .upload-icon {
+  @apply text-brand-primary-hover!;
+}

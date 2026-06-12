@@ -1,0 +1,77 @@
+{
+  "header": {
+    "subtitle": "Hệ thống chuyển đổi giọng nói cục bộ (Local Whisper)",
+    "checking": "Đang kiểm tra kết nối...",
+    "gpuActive": "GPU Hoạt động",
+    "online": "Server Online",
+    "offline": "Server Offline (Cần chạy server backend)"
+  },
+  "settings": {
+    "title": "Cấu hình mô hình AI",
+    "modelLabel": "Mô hình nhận dạng (Model size):",
+    "languageLabel": "Ngôn ngữ trong file:",
+    "models": {
+      "tiny": "Tiny (Rất nhanh, chính xác trung bình)",
+      "base": "Base (Nhanh, chính xác khá)",
+      "small": "Small (Cân bằng, khuyên dùng)",
+      "medium": "Medium (Chậm, chính xác cao)"
+    },
+    "languages": {
+      "auto": "🔍 Tự động nhận dạng (Auto)",
+      "vi": "🇻🇳 Tiếng Việt (Vietnamese)",
+      "en": "🇺🇸 Tiếng Anh (English)",
+      "ja": "🇯🇵 Tiếng Nhật (Japanese)",
+      "zh": "🇨🇳 Tiếng Trung (Chinese)",
+      "ko": "🇰🇷 Tiếng Hàn (Korean)",
+      "fr": "🇫🇷 Tiếng Pháp (French)",
+      "de": "🇩🇪 Tiếng Đức (German)"
+    }
+  },
+  "upload": {
+    "dragDropText": "Kéo & thả file âm thanh hoặc video vào đây",
+    "orChoose": "hoặc nhấn để",
+    "selectFile": "chọn file từ thiết bị",
+    "limitInfo": "Hỗ trợ file có dung lượng lên đến 500MB+ (chạy local)",
+    "formatError": "Định dạng file không được hỗ trợ! Vui lòng chọn file âm thanh hoặc video.",
+    "audioFormats": "MP3, WAV, M4A, FLAC",
+    "videoFormats": "MP4, MKV, MOV, AVI"
+  },
+  "player": {
+    "changeFile": "Chọn file khác",
+    "pause": "Tạm dừng",
+    "play": "Nghe nhạc"
+  },
+  "app": {
+    "startBtn": "Bắt đầu trích xuất phụ đề",
+    "uploading": "Đang tải file lên server...",
+    "transcribing": "Đang nhận diện giọng nói...",
+    "gpuAlert": "Tiến trình này đang chạy trực tiếp trên GPU Nvidia RTX 2060 của bạn. Thời gian tùy thuộc vào độ dài file.",
+    "completedAlert": "Đã dịch xong! Bạn có thể xem kết quả ở khung bên phải.",
+    "resetBtn": "Khởi tạo lại",
+    "errorTitle": "Gặp lỗi trong quá trình xử lý:",
+    "preparingTitle": "Đang chuẩn bị bản dịch...",
+    "preparingDesc": "Mô hình Whisper đang chuyển âm thanh thành phụ đề văn bản. Kết quả sẽ tự động hiển thị ở đây.",
+    "noDataTitle": "Chưa có dữ liệu phụ đề",
+    "noDataDesc": "Tải lên một file âm thanh/video ở khung bên trái và bấm bắt đầu để trích xuất chữ."
+  },
+  "viewer": {
+    "searchPlaceholder": "Tìm kiếm từ khóa...",
+    "autoScroll": "Cuộn tự động",
+    "copy": "Sao chép",
+    "copied": "Đã chép",
+    "download": "Tải xuống",
+    "exportTxt": "Định dạng .TXT (Thô)",
+    "exportSrt": "Định dạng .SRT (Sub)",
+    "exportVtt": "Định dạng .VTT (Web)",
+    "exportJson": "Định dạng .JSON (Đầy đủ)",
+    "detectedLanguage": "Ngôn ngữ nhận diện",
+    "confidence": "độ tin cậy",
+    "duration": "Tổng thời lượng",
+    "noResult": "Không tìm thấy kết quả phù hợp.",
+    "noData": "Không có dữ liệu phụ đề."
+  },
+  "store": {
+    "selectFileError": "Vui lòng chọn một file trước khi tiếp tục!",
+    "unknownError": "Đã xảy ra lỗi không xác định trong quá trình xử lý."
+  }
+}
