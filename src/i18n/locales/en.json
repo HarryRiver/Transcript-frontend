@@ -45,7 +45,7 @@
     "recordSubtitle": "Record via microphone or capture online meeting audio",
     "recordSource": "Audio Source:",
     "recordSourceMic": "🎙️ My Microphone",
-    "recordSourceMeet": "💻 Meeting Audio (Google Meet/Zoom)",
+    "recordSourceMeet": "💻 Meeting / System Audio",
     "recordMode": "Transcription Mode:",
     "recordModeOffline": "⏳ Batch (Record then translate)",
     "recordModeLive": "⚡ Real-time (Live)",

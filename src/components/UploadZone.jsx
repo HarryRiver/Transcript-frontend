@@ -73,15 +73,46 @@ export default function UploadZone() {
     return `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
   };
 
+  const cleanupLiveAudio = () => {
+    if (audioProcessorRef.current) {
+      audioProcessorRef.current.disconnect();
+      audioProcessorRef.current = null;
+    }
+    if (audioSourceRef.current) {
+      audioSourceRef.current.disconnect();
+      audioSourceRef.current = null;
+    }
+    if (audioContextRef.current) {
+      audioContextRef.current.close().catch(() => {});
+      audioContextRef.current = null;
+    }
+    if (streamRef.current) {
+      streamRef.current.getTracks().forEach(track => track.stop());
+      streamRef.current = null;
+    }
+    if (timerIntervalRef.current) {
+      clearInterval(timerIntervalRef.current);
+      timerIntervalRef.current = null;
+    }
+    setIsRecording(false);
+    setRecordingDuration(0);
+  };
+
   const startRecording = async () => {
     setRecordError(null);
     try {
       const settings = useTranscribeStore.getState().settings;
       
-      // Khởi tạo luồng âm thanh
+      // Luồng khởi tạo âm thanh
       let stream;
       if (recordSource === 'mic') {
-        stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+        stream = await navigator.mediaDevices.getUserMedia({
+          audio: {
+            echoCancellation: true,
+            noiseSuppression: true,
+            autoGainControl: true
+          }
+        });
       } else {
         // Thu âm tiếng cuộc họp (Google Meet/Zoom) - Tab Share Audio
         stream = await navigator.mediaDevices.getDisplayMedia({
@@ -177,18 +208,39 @@ export default function UploadZone() {
             if (isFinal && segments.length > 0) {
               committedSegmentsRef.current = [...committed, ...segments];
             }
-          } catch {
+          } catch (e) {
             // Bỏ qua lỗi parse gói tin rỗng
           }
         };
 
+        ws.onclose = () => {
+          console.log("WebSocket connection closed by server");
+          cleanupLiveAudio();
+          useTranscribeStore.setState({ status: 'completed' });
+        };
+
         ws.onerror = () => {
           setRecordError(t('store.unknownError'));
+          cleanupLiveAudio();
+          useTranscribeStore.setState({ status: 'error' });
         };
 
         // Thiết lập bộ lọc downsample qua Web Audio
         const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        if (audioCtx.state === 'suspended') {
+          console.log("AudioContext is suspended. Resuming...");
+          await audioCtx.resume();
+        }
+        console.log("AudioContext state is now:", audioCtx.state);
         audioContextRef.current = audioCtx;
+
+        const audioTrack = stream.getAudioTracks()[0];
+        if (audioTrack) {
+          console.log("Audio track label:", audioTrack.label);
+          console.log("Audio track enabled:", audioTrack.enabled, "muted:", audioTrack.muted);
+        } else {
+          console.warn("No audio tracks found in stream");
+        }
 
         const source = audioCtx.createMediaStreamSource(stream);
         audioSourceRef.current = source;
@@ -223,7 +275,7 @@ export default function UploadZone() {
     } catch (err) {
       console.error("Recording error:", err);
       setRecordError(t('upload.recordPermissionError'));
-      setIsRecording(false);
+      cleanupLiveAudio();
       useTranscribeStore.setState({ status: 'idle' });
     }
   };
@@ -244,36 +296,14 @@ export default function UploadZone() {
       if (wsRef.current) {
         if (wsRef.current.readyState === WebSocket.OPEN) {
           wsRef.current.send(JSON.stringify({ type: "close" }));
+        } else {
+          cleanupLiveAudio();
+          useTranscribeStore.setState({ status: 'completed' });
         }
-        wsRef.current.close();
-        wsRef.current = null;
+      } else {
+        cleanupLiveAudio();
+        useTranscribeStore.setState({ status: 'completed' });
       }
-
-      if (audioProcessorRef.current) {
-        audioProcessorRef.current.disconnect();
-        audioProcessorRef.current = null;
-      }
-      if (audioSourceRef.current) {
-        audioSourceRef.current.disconnect();
-        audioSourceRef.current = null;
-      }
-      if (audioContextRef.current) {
-        audioContextRef.current.close();
-        audioContextRef.current = null;
-      }
-
-      if (streamRef.current) {
-        streamRef.current.getTracks().forEach(track => track.stop());
-        streamRef.current = null;
-      }
-
-      if (timerIntervalRef.current) {
-        clearInterval(timerIntervalRef.current);
-      }
-
-      setIsRecording(false);
-      setRecordingDuration(0);
-      useTranscribeStore.setState({ status: 'completed' });
     }
   };
 
