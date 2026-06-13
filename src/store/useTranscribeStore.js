@@ -135,7 +135,6 @@ export const useTranscribeStore = create((set, get) => ({
 
         set({ result: response.data, status: 'completed' });
       } catch (err) {
-        console.error(err);
         const errorMsg = err.response?.data?.detail || 'store.unknownError';
         set({ error: errorMsg, status: 'error' });
       }
@@ -149,7 +148,6 @@ export const useTranscribeStore = create((set, get) => ({
         });
         set({ result: response.data, status: 'completed' });
       } catch (err) {
-        console.error(err);
         const errorMsg = err.response?.data?.detail || 'store.unknownError';
         set({ error: errorMsg, status: 'error' });
       }
