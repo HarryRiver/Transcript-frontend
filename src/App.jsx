@@ -102,7 +102,7 @@ export default function App() {
           {/* Upload and File display panel */}
           <div className="w-full">
             <AnimatePresence mode="wait">
-              {!file && (status === 'idle' || status === 'error') ? (
+              {!file && (status === 'idle' || status === 'error' || (status === 'transcribing' && transcribeType === 'record')) ? (
                 <motion.div
                   key="upload-zone"
                   initial={{ opacity: 0, y: 10 }}
@@ -218,7 +218,7 @@ export default function App() {
         {/* Right Column: Transcript Viewport */}
         <section className="lg:col-span-7 w-full h-[580px]">
           <AnimatePresence mode="wait">
-            {status === 'completed' && result ? (
+            {(status === 'completed' || (status === 'transcribing' && transcribeType === 'record')) && result ? (
               <motion.div
                 key="transcript-viewer"
                 initial={{ opacity: 0, scale: 0.99 }}

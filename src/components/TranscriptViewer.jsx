@@ -46,13 +46,22 @@ export default function TranscriptViewer() {
 
   // Tự động cuộn theo từ đang đọc (Auto scroll)
   useEffect(() => {
-    if (autoScroll && activeSegmentRef.current && containerRef.current) {
+    if (!autoScroll || !containerRef.current) return;
+
+    if (activeSegmentIndex !== -1 && activeSegmentRef.current) {
+      // Khi phát nhạc/video: cuộn tới phân đoạn đang nói ở giữa màn hình
       activeSegmentRef.current.scrollIntoView({
         behavior: 'smooth',
         block: 'center',
       });
+    } else if (result?.segments.length > 0) {
+      // Khi ghi âm live: cuộn xuống cuối để hiển thị câu mới nhất
+      containerRef.current.scrollTo({
+        top: containerRef.current.scrollHeight,
+        behavior: 'smooth',
+      });
     }
-  }, [activeSegmentIndex, autoScroll]);
+  }, [activeSegmentIndex, autoScroll, result?.segments.length]);
 
   if (!result) return null;
 
