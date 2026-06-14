@@ -64,23 +64,6 @@ export default function App() {
               <Sparkles className="w-4 h-4 text-brand-primary-hover" /> {t('settings.title')}
             </h2>
 
-            {/* Model size selector */}
-            <div className="flex flex-col gap-1.5">
-              <label className="text-xs text-slate-400 font-medium">{t('settings.modelLabel')}</label>
-              <select
-                value={settings.model}
-                onChange={handleModelChange}
-                disabled={status !== 'idle' && status !== 'error'}
-                className="input-select"
-              >
-                {MODELS.map((m) => (
-                  <option key={m.id} value={m.id} className="bg-slate-900 text-slate-200">
-                    {t(m.name)} ({m.vram})
-                  </option>
-                ))}
-              </select>
-            </div>
-
             {/* Language Selector */}
             <div className="flex flex-col gap-1.5">
               <label className="text-xs text-slate-400 font-medium">{t('settings.languageLabel')}</label>
