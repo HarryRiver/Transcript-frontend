@@ -190,6 +190,25 @@ export default function UploadZone() {
               return;
             }
 
+            // Xử lý gói tin tinh chỉnh bất đồng bộ từ LLM (Dynamic Swap)
+            if (data.type === 'refined_update') {
+              const { segment_id, text } = data;
+              committedSegmentsRef.current = committedSegmentsRef.current.map(seg => 
+                seg.id === segment_id ? { ...seg, text, refined: true } : seg
+              );
+              
+              const currentResult = useTranscribeStore.getState().result;
+              if (currentResult) {
+                useTranscribeStore.setState({
+                  result: {
+                    ...currentResult,
+                    segments: committedSegmentsRef.current
+                  }
+                });
+              }
+              return;
+            }
+
             const segments = data.segments || [];
             const isFinal = data.is_final;
             
