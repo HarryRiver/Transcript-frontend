@@ -247,8 +247,7 @@ export default function TranscriptViewer() {
       </div>
 
       {/* Language metadata banner */}
-      <div className="px-4 py-2 bg-brand-primary/5 border-b border-white/5 text-[11px] text-slate-400 flex justify-between">
-        <span>{t('viewer.detectedLanguage')}: <strong className="text-brand-primary-hover uppercase">{result.language}</strong> ({t('viewer.confidence')}: {(result.language_probability * 100).toFixed(0)}%)</span>
+      <div className="px-4 py-2 bg-brand-primary/5 border-b border-white/5 text-[11px] text-slate-400 flex justify-end">
         <span>{t('viewer.duration')}: <strong>{result.duration}s</strong></span>
       </div>
 
